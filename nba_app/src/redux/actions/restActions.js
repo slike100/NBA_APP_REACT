@@ -4,7 +4,6 @@ import {
 } from "../types/restTypes";
 
 import Axios from "axios";
-import store from "../store";
 
 
 export const changeStateTest = () => {
@@ -15,15 +14,16 @@ export const changeStateTest = () => {
 }
 
 export const getPlayerData = () => {
-  console.log('Got a player');
-  Axios
+  return dispatch => {
+    return Axios
     .get('http://localhost:3001/nba/')
     .then(res => {
       const action = {
         type: GET_PLAYER,
         payload: res.data.league.standard,
       }
-      store.dispatch(action);
+      dispatch(action);
     })
     .catch(err => console.log(err))
+  }
 }

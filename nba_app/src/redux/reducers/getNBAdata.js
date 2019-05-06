@@ -5,6 +5,7 @@ import {
 const initialState = {
   testing: 1,
   playerData: '',
+  dataLoaded: false,
 }
 
 export default function restInterfaceReducer(state = initialState, action) {
@@ -22,7 +23,9 @@ export default function restInterfaceReducer(state = initialState, action) {
       console.log('we got so many players!');
       console.log(payload)
       return {
-        ...state, playerData: payload,
+        ...state, 
+        playerData: payload,
+        dataLoaded: true,
       }
     
     default:
