@@ -1,10 +1,10 @@
 import {
-  CHANGE_STATE, GET_PLAYER,
+  GET_PLAYER, GET_TEAMS
 } from "../types/restTypes";
 
 const initialState = {
-  testing: 1,
-  playerData: '',
+  playerData: [],
+  teamData: [],
   dataLoaded: false,
 }
 
@@ -13,19 +13,21 @@ export default function restInterfaceReducer(state = initialState, action) {
 
   // switch over the action's type and return the appropriate updated copy of our state
   switch (type) {
-    case CHANGE_STATE:
-      console.log('changing state reducer');
-      return {
-        ...state, testing: state.testing + 1
-      }
-    
     case GET_PLAYER:
-      console.log('we got so many players!');
+      console.log('We Got So Many Players!');
       console.log(payload)
       return {
         ...state, 
         playerData: payload,
         dataLoaded: true,
+      }
+
+    case GET_TEAMS:
+      console.log('We Got Teams');
+      console.log(payload);
+      return {
+        ...state,
+        teamData: payload,
       }
     
     default:
