@@ -3,9 +3,22 @@ import { PureComponent } from 'react';
 import { connect } from "react-redux";
 import { Table } from 'reactstrap';
 import { Spinner } from 'reactstrap';
+import ModalExample from './player_component';
 
 
 class PlayerCard extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: false
+    };
+  }
+
+  toggle = () => {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+  }
 
 
   findTeam = (player) => {
@@ -24,7 +37,7 @@ class PlayerCard extends PureComponent {
       if(player.isActive){
         var team = this.findTeam(player);
         return (
-            <tr key={player.personId} data-id={player.personId} onClick={this.playerModelPopulate}>
+            <tr key={player.personId} data-id={player.personId} onClick={this.toggle}>
               <th scope="row">{index}</th>
               <td>{player.temporaryDisplayName}</td>
               {team}
@@ -52,6 +65,8 @@ class PlayerCard extends PureComponent {
     else 
     {
     return (
+      <div>
+      <ModalExample modal={this.state.modal} />
       <Table hover bordered dark>
         <thead>
           <tr>
@@ -67,6 +82,7 @@ class PlayerCard extends PureComponent {
           {this.condRender()}
         </tbody>
       </Table>
+      </div>
       )
       }
     }

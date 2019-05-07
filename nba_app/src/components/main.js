@@ -5,13 +5,8 @@ import PlayerCard from './player_card';
 
 
 
+
 class Main extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      what: '',
-    }
-  }
 
   componentWillMount(){
     this.props.getPlayerData();
