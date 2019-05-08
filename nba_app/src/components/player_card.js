@@ -10,14 +10,32 @@ class PlayerCard extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      playerData: [],
     };
+  }
+
+  getPlayerInfo = (e) => {
+    console.log(e.target);
+    for (let i = 0; i < this.props.playerData.length; i++) {
+      if(this.props.playerData[i].personId === e.target.parentNode.dataset.id){
+        var player = this.props.playerData[i];
+      }
+    }
+    this.setState({
+      playerData: player,
+    })
   }
 
   toggle = () => {
     this.setState(prevState => ({
-      modal: !prevState.modal
+      modal: !prevState.modal,
     }));
+  }
+
+  populateModal = (e) => {
+    this.toggle();
+    this.getPlayerInfo(e);
   }
 
 
@@ -37,7 +55,7 @@ class PlayerCard extends PureComponent {
       if(player.isActive){
         var team = this.findTeam(player);
         return (
-            <tr key={player.personId} data-id={player.personId} onClick={this.toggle}>
+            <tr key={player.personId} data-id={player.personId} onClick={this.populateModal}>
               <th scope="row">{index}</th>
               <td>{player.temporaryDisplayName}</td>
               {team}
@@ -49,10 +67,6 @@ class PlayerCard extends PureComponent {
       }
     })
   }
-
- playerModelPopulate = (e) => {
-   console.log(e.target.parentNode.dataset.id);
- }
 
   render() {
     if(this.props.playerData.length === 0 || this.props.teamData.length === 0){
@@ -66,7 +80,7 @@ class PlayerCard extends PureComponent {
     {
     return (
       <div>
-      <ModalExample modal={this.state.modal} />
+      <ModalExample modal={this.state.modal} toggle={this.toggle} playerData={this.state.playerData} />
       <Table hover bordered dark>
         <thead>
           <tr>
