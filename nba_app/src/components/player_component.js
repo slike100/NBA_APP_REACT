@@ -1,8 +1,21 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem  } from 'reactstrap';
+import { statement } from '@babel/template';
 
-class ModalExample extends React.PureComponent {
+class PlayerModal extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      buttonToggle: false,
+    }
+  }
   
+  toggle = () => {
+    this.setState(prevState => ({
+      buttonToggle: !prevState.buttonToggle,
+    }));
+  }
+
   render() {
     return (
       <div>
@@ -10,9 +23,23 @@ class ModalExample extends React.PureComponent {
           <ModalHeader toggle={this.props.toggle}>Modal title</ModalHeader>
           <ModalBody>
           </ModalBody>
+          <ButtonDropdown isOpen={this.state.buttonToggle} toggle={this.toggle}>
+            <DropdownToggle caret>
+            Year
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem header>Header</DropdownItem>
+              <DropdownItem disabled>Action</DropdownItem>
+              <DropdownItem>Another Action</DropdownItem>
+              <DropdownItem divider/>
+              <DropdownItem>Another Action</DropdownItem>
+            </DropdownMenu>
+          </ButtonDropdown>
             {this.props.playerData.temporaryDisplayName}
+            <br></br>
+            PPG: {this.props.playerStats.stats.careerSummary.ppg}
           <ModalFooter>
-          <Button color="primary" onClick={this.props.toggle}>Do Something</Button>{' '}
+          <Button color="primary" onClick={this.props.toggle}>Close</Button>{' '}
           </ModalFooter>
         </Modal>
       </div>
@@ -20,4 +47,4 @@ class ModalExample extends React.PureComponent {
   }
 }
 
-export default ModalExample;
+export default PlayerModal;

@@ -3,7 +3,9 @@ import { PureComponent } from 'react';
 import { connect } from "react-redux";
 import { Table } from 'reactstrap';
 import { Spinner } from 'reactstrap';
-import ModalExample from './player_component';
+import PlayerModal from './player_component';
+import { getIndividualPlayer }  from "../redux/actions/restActions"
+
 
 
 class PlayerCard extends PureComponent {
@@ -24,7 +26,7 @@ class PlayerCard extends PureComponent {
     }
     this.setState({
       playerData: player,
-    })
+    });
   }
 
   toggle = () => {
@@ -33,9 +35,10 @@ class PlayerCard extends PureComponent {
     }));
   }
 
-  populateModal = (e) => {
+  populateModal = async (e) => {
     this.toggle();
-    this.getPlayerInfo(e);
+    await this.getPlayerInfo(e);
+    this.props.getIndividualPlayer(this.state.playerData.personId);
   }
 
 
@@ -72,15 +75,25 @@ class PlayerCard extends PureComponent {
     if(this.props.playerData.length === 0 || this.props.teamData.length === 0){
       return (
         <div>
-         <Spinner style={{ width: '7rem', height: '7rem' }} />{' '}
+         <Table hover bordered dark>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Team</th>
+              <th>Position</th>
+              <th>Years Pro</th>
+              <th>College/Pre-NBA Affiliation</th>
+            </tr>
+          </thead>
+        </Table>
+        <Spinner style={{ width: '7rem', height: '7rem' }} />{' '}
         </div>
       )
     } 
-    else 
-    {
+    else if (this.props.playerStats.length === 0){
     return (
       <div>
-      <ModalExample modal={this.state.modal} toggle={this.toggle} playerData={this.state.playerData} />
       <Table hover bordered dark>
         <thead>
           <tr>
@@ -98,18 +111,44 @@ class PlayerCard extends PureComponent {
       </Table>
       </div>
       )
+      } else {
+        return (
+          <div>
+          <PlayerModal modal={this.state.modal} toggle={this.toggle} playerData={this.state.playerData} playerStats={this.props.playerStats} />
+          <Table hover bordered dark>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Team</th>
+              <th>Position</th>
+              <th>Years Pro</th>
+              <th>College/Pre-NBA Affiliation</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.condRender()}
+          </tbody>
+          </Table>
+          </div>
+        )}
       }
     }
-  }
+
+const mapDispatchToProps = {
+  getIndividualPlayer,
+}
 
 function mapStateToProps(state){
   return {
     playerData: state.playerData,
     teamData: state.teamData,
+    playerStats: state.playerStats,
   }
 }
 
 
 export default connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(PlayerCard);

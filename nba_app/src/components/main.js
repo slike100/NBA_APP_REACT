@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux"; // import connect from Redux
-import { getPlayerData, getTeamData }  from "../redux/actions/restActions"
+import { getPlayerData, getTeamData, getIndividualPlayer }  from "../redux/actions/restActions"
 import PlayerCard from './player_card';
 
 
@@ -11,6 +11,7 @@ class Main extends React.PureComponent {
   componentWillMount(){
     this.props.getPlayerData();
     this.props.getTeamData();
+    this.props.getIndividualPlayer();
   }
 
   render() {
@@ -25,6 +26,7 @@ class Main extends React.PureComponent {
 const mapDispatchToProps = {
   getPlayerData,
   getTeamData,
+  getIndividualPlayer,
 }
 
 function mapStateToProps(state){

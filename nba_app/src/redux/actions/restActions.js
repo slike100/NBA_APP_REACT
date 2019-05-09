@@ -1,6 +1,7 @@
 import {
   GET_PLAYER,
   GET_TEAMS,
+  GET_INDIVIDUAL_PLAYER,
 } from "../types/restTypes";
 
 import Axios from "axios";
@@ -38,5 +39,20 @@ export const getTeamData = () => {
       dispatch(action);
     })
     .catch(err => console.log(err))
+  }
+}
+
+export const getIndividualPlayer = (playerId) => {
+  return dispatch => {
+    return Axios
+    .post('http://localhost:3001/nba/player', {id : playerId})
+    .then(res =>{
+      const action = {
+        type: GET_INDIVIDUAL_PLAYER,
+        payload: res.data.league.standard,
+      }
+      dispatch(action);
+    })
+    .catch(err => console.log(err));
   }
 }

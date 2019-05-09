@@ -1,11 +1,12 @@
 import {
-  GET_PLAYER, GET_TEAMS
+  GET_PLAYER, GET_TEAMS, GET_INDIVIDUAL_PLAYER,
 } from "../types/restTypes";
 
 const initialState = {
   playerData: [],
   teamData: [],
   dataLoaded: false,
+  playerStats: [],
 }
 
 export default function restInterfaceReducer(state = initialState, action) {
@@ -28,6 +29,14 @@ export default function restInterfaceReducer(state = initialState, action) {
       return {
         ...state,
         teamData: payload,
+      }
+
+    case GET_INDIVIDUAL_PLAYER: 
+      console.log('We got individual players');
+      console.log(payload);
+      return {
+        ...state,
+        playerStats: payload,
       }
     
     default:
