@@ -27,27 +27,23 @@ class PlayerModal extends React.PureComponent {
 
   render() {
 
-    const playerPPG = () => {
-      var points;
-      for(let i = 0; i < this.props.playerStats.stats.regularSeason.season.length; i++) {
-        if(this.props.playerStats.stats.regularSeason.season[i].seasonYear == this.state.year){
-          points = (<div>
-            {this.props.playerStats.stats.regularSeason.season[i].total.ppg}
-          </div>)
+    const playerStats = () => {
+      return this.props.playerStats.stats.regularSeason.season.map( (stats, index) => {
+        if(stats.seasonYear == this.state.year){
+          return (<div key={index}>
+            <p>PPG: {stats.total.ppg}</p>
+            <p>APG: {stats.total.apg}</p>
+            <p>RPG: {stats.total.rpg}</p>
+            <p>BPG: {stats.total.bpg}</p>
+            </div>)
         }
-      }
-      return points;
+      })
     }
 
     const numberOfYears = () => {
       return this.props.playerStats.stats.regularSeason.season.map( (year, index) => {
         return (<DropdownItem key={index} onClick={this.getYear}>{year.seasonYear}</DropdownItem>)
       });
-
-      // for (let i = 0; i < this.props.playerStats.stats.regularSeason.season.length; i++){
-      //   console.log(this.props.playerStats.stats.regularSeason.season[i].seasonYear)
-      //   return (<DropdownItem onClick={this.getYear}>{this.props.playerStats.stats.regularSeason.season[i].seasonYear}</DropdownItem>)
-      // }
     }
 
     return (
@@ -69,8 +65,7 @@ class PlayerModal extends React.PureComponent {
             </DropdownMenu>
           </ButtonDropdown>
             <br></br>
-            PPG: {playerPPG()}
-            <h1>HELLO!!</h1>
+            {playerStats()}
           <ModalFooter>
           <Button color="primary" onClick={this.props.toggle}>Close</Button>{' '}
           </ModalFooter>
