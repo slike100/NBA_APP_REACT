@@ -39,6 +39,17 @@ class PlayerModal extends React.PureComponent {
       return points;
     }
 
+    const numberOfYears = () => {
+      return this.props.playerStats.stats.regularSeason.season.map( (year, index) => {
+        return (<DropdownItem key={index} onClick={this.getYear}>{year.seasonYear}</DropdownItem>)
+      });
+
+      // for (let i = 0; i < this.props.playerStats.stats.regularSeason.season.length; i++){
+      //   console.log(this.props.playerStats.stats.regularSeason.season[i].seasonYear)
+      //   return (<DropdownItem onClick={this.getYear}>{this.props.playerStats.stats.regularSeason.season[i].seasonYear}</DropdownItem>)
+      // }
+    }
+
     return (
       <div>
         <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className}>
@@ -50,14 +61,15 @@ class PlayerModal extends React.PureComponent {
             Year
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem onClick={this.getYear}>2018</DropdownItem>
+              {numberOfYears()}
+              {/* <DropdownItem onClick={this.getYear}>2018</DropdownItem>
               <DropdownItem onClick={this.getYear}>2017</DropdownItem>
               <DropdownItem onClick={this.getYear}>2016</DropdownItem>
-              <DropdownItem onClick={this.getYear}>2015</DropdownItem>
+              <DropdownItem onClick={this.getYear}>2015</DropdownItem> */}
             </DropdownMenu>
           </ButtonDropdown>
             <br></br>
-            {playerPPG()}
+            PPG: {playerPPG()}
             <h1>HELLO!!</h1>
           <ModalFooter>
           <Button color="primary" onClick={this.props.toggle}>Close</Button>{' '}
