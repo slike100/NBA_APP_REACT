@@ -7,6 +7,7 @@ class PlayerModal extends React.PureComponent {
     super(props);
     this.state = {
       buttonToggle: false,
+      year: 2018,
     }
   }
   
@@ -16,11 +17,32 @@ class PlayerModal extends React.PureComponent {
     }));
   }
 
+  getYear = (e) => {
+    console.log(e.target.innerText);
+    this.setState({
+      year: e.target.innerText,
+    })
+  }
+
+
   render() {
+
+    const playerPPG = () => {
+      var points;
+      for(let i = 0; i < this.props.playerStats.stats.regularSeason.season.length; i++) {
+        if(this.props.playerStats.stats.regularSeason.season[i].seasonYear == this.state.year){
+          points = (<div>
+            {this.props.playerStats.stats.regularSeason.season[i].total.ppg}
+          </div>)
+        }
+      }
+      return points;
+    }
+
     return (
       <div>
         <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.props.toggle}>Modal title</ModalHeader>
+          <ModalHeader toggle={this.props.toggle}>{this.props.playerData.temporaryDisplayName}</ModalHeader>
           <ModalBody>
           </ModalBody>
           <ButtonDropdown isOpen={this.state.buttonToggle} toggle={this.toggle}>
@@ -28,16 +50,15 @@ class PlayerModal extends React.PureComponent {
             Year
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem header>Header</DropdownItem>
-              <DropdownItem disabled>Action</DropdownItem>
-              <DropdownItem>Another Action</DropdownItem>
-              <DropdownItem divider/>
-              <DropdownItem>Another Action</DropdownItem>
+              <DropdownItem onClick={this.getYear}>2018</DropdownItem>
+              <DropdownItem onClick={this.getYear}>2017</DropdownItem>
+              <DropdownItem onClick={this.getYear}>2016</DropdownItem>
+              <DropdownItem onClick={this.getYear}>2015</DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>
-            {this.props.playerData.temporaryDisplayName}
             <br></br>
-            PPG: {this.props.playerStats.stats.careerSummary.ppg}
+            {playerPPG()}
+            <h1>HELLO!!</h1>
           <ModalFooter>
           <Button color="primary" onClick={this.props.toggle}>Close</Button>{' '}
           </ModalFooter>
