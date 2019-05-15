@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem  } from 'reactstrap';
 import { statement } from '@babel/template';
 
+
 class PlayerModal extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -52,16 +53,13 @@ class PlayerModal extends React.PureComponent {
           <ModalHeader toggle={this.props.toggle}>{this.props.playerData.temporaryDisplayName}</ModalHeader>
           <ModalBody>
           </ModalBody>
+
           <ButtonDropdown isOpen={this.state.buttonToggle} toggle={this.toggle}>
             <DropdownToggle caret>
-            Year
+            Year: {this.state.year}
             </DropdownToggle>
             <DropdownMenu>
               {numberOfYears()}
-              {/* <DropdownItem onClick={this.getYear}>2018</DropdownItem>
-              <DropdownItem onClick={this.getYear}>2017</DropdownItem>
-              <DropdownItem onClick={this.getYear}>2016</DropdownItem>
-              <DropdownItem onClick={this.getYear}>2015</DropdownItem> */}
             </DropdownMenu>
           </ButtonDropdown>
             <br></br>

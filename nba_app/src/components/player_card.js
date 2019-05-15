@@ -6,8 +6,6 @@ import { Spinner } from 'reactstrap';
 import PlayerModal from './player_component';
 import { getIndividualPlayer }  from "../redux/actions/restActions"
 
-
-
 class PlayerCard extends PureComponent {
   constructor(props) {
     super(props);
